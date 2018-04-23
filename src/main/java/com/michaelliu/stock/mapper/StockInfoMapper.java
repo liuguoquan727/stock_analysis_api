@@ -17,12 +17,12 @@ import org.springframework.stereotype.Component;
 @Mapper
 @Component
 public interface StockInfoMapper {
-  @Select("SELECT * FROM STOCK_HISTORY")
+  @Select("SELECT * FROM stock_history")
   List<StockInfo> queryStockInfos();
 
-  @Select("select * from stock_history where id=#{gid}")
-  StockInfo queryStockInfoById(@Param("gid") String id);
+  @Select("select * from stock_history where gid=#{gid} order by time_stamp asc")
+  List<StockInfo> queryStockInfoById(@Param("gid") String id);
 
-  @Delete("delete from stock_history where id=#{gid}")
+  @Delete("delete from stock_history where gid=#{gid}")
   void delete(@Param("gid") String id);
 }

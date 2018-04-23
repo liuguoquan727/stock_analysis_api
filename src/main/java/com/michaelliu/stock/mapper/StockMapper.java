@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface StockMapper {
 
-  @Select("SELECT * FROM STOCK_NAME")
+  @Select("SELECT * FROM stock_name")
   List<Stock> queryStocks();
 
   @Select("select * from stock_name where id=#{gid}")
