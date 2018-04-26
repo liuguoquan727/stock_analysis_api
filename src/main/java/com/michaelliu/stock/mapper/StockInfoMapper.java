@@ -20,7 +20,7 @@ public interface StockInfoMapper {
   @Select("SELECT * FROM stock_history")
   List<StockInfo> queryStockInfos();
 
-  @Select("select * from stock_history where gid=#{gid} order by time_stamp asc")
+  @Select("select * from stock_history where gid=#{gid} order by time_stamp desc")
   List<StockInfo> queryStockInfoById(@Param("gid") String id);
 
   @Delete("delete from stock_history where gid=#{gid}")

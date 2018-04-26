@@ -1,5 +1,6 @@
 package com.michaelliu.stock.controller.stock;
 
+import com.michaelliu.stock.api.response.Response;
 import com.michaelliu.stock.bean.Stock;
 import com.michaelliu.stock.service.IStockService;
 import java.util.List;
@@ -20,7 +21,15 @@ public class StockController {
   @Autowired IStockService mStockService;
 
   @RequestMapping("/list")
-  public List<Stock> getStockInfos() {
-    return mStockService.queryStockInfos();
+  public Response getStockInfos() {
+    Response response = new Response();
+    try {
+      response.code = 200;
+      response.data = mStockService.queryStockInfos();
+    } catch (Exception e) {
+      response.code = 2002;
+      response.msg = e.getMessage();
+    }
+    return response;
   }
 }

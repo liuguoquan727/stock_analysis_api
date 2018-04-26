@@ -4,6 +4,7 @@ import com.michaelliu.stock.api.response.Response;
 import com.michaelliu.stock.bean.StockInfo;
 import com.michaelliu.stock.service.IStockInfoService;
 import com.michaelliu.stock.utils.TextUtis;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +40,19 @@ public class StockInfoController {
 
       try {
         response.code = 200;
-        response.data = mStockInfoService.queryStockInfoById(info.getGid());
+        List<StockInfo> stockInfos = mStockInfoService.queryStockInfoById(info.getGid());
+        List<StockInfo> result = new ArrayList<>();
+        if (stockInfos.size() > 0) {
+          StockInfo minItem = stockInfos.get(0);
+          result.add(minItem);
+          for (StockInfo stockInfo : stockInfos) {
+            if (minItem.getTimestamp() != stockInfo.getTimestamp()) {
+              result.add(stockInfo);
+              minItem = stockInfo;
+            }
+          }
+        }
+        response.data = result;
       } catch (Exception e) {
         response.code = 2002;
         response.msg = e.getMessage();
